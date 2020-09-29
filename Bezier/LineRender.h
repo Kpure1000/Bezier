@@ -32,8 +32,9 @@ public:
 
 		//控制点插入
 		sf::Vector2f last;
-		if (!ctrlPoints.empty())
+		if (ctrlPoints.size() >= 2)
 		{
+			//如果已经插入了两个端点，则从两个端点中间（指数组）开始插入
 			last = ctrlPoints.back();
 			ctrlPoints.pop_back();
 			ctrlPoints.push_back(newController);
@@ -41,19 +42,20 @@ public:
 		}
 		else
 		{
+			//插入端点
 			ctrlPoints.push_back(newController);
 		}
 
 		//缓存点插入
 		for (size_t i = 0; i < ctrlPoints.size(); i++)
 		{
-			if (i >= tmpPoints.size())
+			if (i < tmpPoints.size())
 			{
-				tmpPoints.push_back(ctrlPoints[i]);
+				tmpPoints[i] = ctrlPoints[i];
 			}
 			else
 			{
-				tmpPoints[i] = ctrlPoints[i];
+				tmpPoints.push_back(ctrlPoints[i]);
 			}
 		}
 

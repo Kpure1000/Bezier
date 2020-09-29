@@ -19,7 +19,7 @@ int main()
 
 	sf::Vector2f mousePos;
 
-	LineRender line(11150);
+	LineRender line(15000);
 
 	while (App.isOpen())
 	{
