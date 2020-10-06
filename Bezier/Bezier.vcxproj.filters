@@ -18,12 +18,25 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="bezier_simple.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LineRender.h">
       <Filter>头文件</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="DCube.h">
+=======
+    <ClInclude Include="total.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PointManager.h">
+>>>>>>> 6e718d47762de0512c2feaf5a8b88a1ab58105f3
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
