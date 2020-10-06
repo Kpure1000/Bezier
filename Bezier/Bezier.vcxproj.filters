@@ -18,9 +18,21 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="bezier_simple.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LineRender.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="total.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PointManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
