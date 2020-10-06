@@ -1,5 +1,6 @@
 #include"total.h"
 int main()
 {
-	return bezier_simple_main();
+	//return bezier_simple_main();
+	return dragPoint();
 }

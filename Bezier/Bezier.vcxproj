@@ -152,12 +152,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bezier_simple.cpp" />
+    <ClCompile Include="dragPoint.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BezierDrawer.h" />
     <ClInclude Include="LineRender.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointManager.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="total.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

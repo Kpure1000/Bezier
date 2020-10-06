@@ -1,26 +1,33 @@
+#include"total.h"
+#include"PointManager.h"
+#include"BezierDrawer.h"
+#include<iostream>
 #include<SFML/Graphics.hpp>
 #include<vector>
-#include"LineRender.h"
-#include"total.h"
 
-unsigned int width = 1024, height = 768;
 #define CannotResize  (sf::Style::Titlebar |  sf::Style::Close)
 #define KeyPressing sf::Event::KeyPressed
 #define KeyReleasing sf::Event::KeyReleased
 #define KeyEvent(EV) (sf::Keyboard::isKeyPressed(EV))
 
-int bezier_simple_main()
+int dragPoint()
 {
+	unsigned int width = 1024, height = 768;
 	std::cout << "Bezier曲线演示(去递归)，通过鼠标点按窗口内空间添加控制点\n\n";
 	system("pause");
 
 	sf::RenderWindow App(sf::VideoMode(width, height),
 		"Bezier", sf::Style::Close | sf::Style::Titlebar);
 
-	LineRender line(15000);
+	bool isInsert = false;
+
+	bf::PointManager pm;
+
+	bf::BezierDrawer bDrawer(pm, 8000);
 
 	while (App.isOpen())
 	{
+		bf::Time::tmpDeltaTime = std::clock();
 		sf::Event ev;
 		while (App.pollEvent(ev))
 		{
@@ -28,19 +35,24 @@ int bezier_simple_main()
 			{
 				App.close();
 			}
-			if (ev.type == sf::Event::MouseButtonPressed)
-			{
-				line.InsertController(App.mapPixelToCoords(sf::Mouse::getPosition(App)));
-			}
 		}
 
+		isInsert = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+
+		pm.Update(App.mapPixelToCoords(sf::Mouse::getPosition(App)), isInsert);
+
+		bDrawer.Update();
+		
 		App.clear(sf::Color(40, 40, 40, 255));
 
-		line.Update();
+		App.draw(pm);
 
-		App.draw(line);
+		App.draw(bDrawer);
 
 		App.display();
+
+		bf::Time::deltaTime = std::clock() - bf::Time::tmpDeltaTime;
+		bf::Time::totalTime += bf::Time::deltaTime;
 	}
 	return 0;
 }
