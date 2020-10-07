@@ -23,7 +23,7 @@ int dragPoint()
 
 	bf::PointManager pm;
 
-	bf::BezierDrawer bDrawer(pm, 8000);
+	bf::BezierDrawer bDrawer(pm, 3000);
 
 	while (App.isOpen())
 	{
