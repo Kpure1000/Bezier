@@ -75,9 +75,9 @@ namespace bf
 		vector<Point> points;
 		vector<Point> tmpPoints;
 
-		const float normalRenderR = 4.0f;
-		const float topRenderR = 5.0f;
-		const float checkR = 5.0f;
+		const float normalRenderR = 3.5f;
+		const float topRenderR = 4.5f;
+		const float checkR = 6.0f;
 		const Color normalColor = Color(0x007777ff);
 		const Color highlightColor = Color(0xff0000ff);
 
@@ -95,7 +95,7 @@ namespace bf
 			}
 			else
 			{
-				points.push_back(Point(type, pos, normalRenderR, checkR, normalColor, highlightColor));
+				points.push_back(Point(type, pos, topRenderR, checkR, normalColor, highlightColor));
 			}
 			isUpdate = true;
 		}

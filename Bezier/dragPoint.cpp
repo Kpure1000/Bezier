@@ -13,8 +13,8 @@
 int dragPoint()
 {
 	unsigned int width = 1024, height = 768;
-	std::cout << "Bezier曲线演示(去递归)，通过鼠标点按窗口内空间添加控制点\n\n";
-	system("pause");
+	/*std::cout << "Bezier曲线演示(去递归)，通过鼠标点按窗口内空间添加控制点\n\n";
+	system("pause");*/
 
 	sf::RenderWindow App(sf::VideoMode(width, height),
 		"Bezier", sf::Style::Close | sf::Style::Titlebar);
