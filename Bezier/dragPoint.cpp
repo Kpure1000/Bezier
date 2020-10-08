@@ -52,13 +52,11 @@ int dragPoint()
 
 			if (ev.mouseWheelScroll.delta == 1 and ViewScale > 0.5)
 			{
-				//cout << "UP" << endl;
-				camera.setSize(ViewSize.x / 1.02, ViewSize.y / 1.02); //platscale.x *= 1.07;
+				camera.setSize(ViewSize.x / 1.02, ViewSize.y / 1.02);
 			}
 			if (ev.mouseWheelScroll.delta == -1 and ViewScale < 10)
 			{
-				//cout << "DOWN" << endl;
-				camera.setSize(ViewSize.x * 1.02, ViewSize.y * 1.02); //platscale.x /= 1.07;
+				camera.setSize(ViewSize.x * 1.02, ViewSize.y * 1.02);
 			}
 		}
 
