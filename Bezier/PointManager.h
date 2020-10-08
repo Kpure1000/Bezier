@@ -13,7 +13,7 @@ namespace bf
 		/// 更新
 		/// </summary>
 		/// <param name="mousePosition"></param>
-		void Update(Vector2f const& mousePosition, bool isPressed)
+		void Update(Vector2f const& mousePosition, bool& isPressed)
 		{
 			if (!isDraged)
 			{
@@ -27,6 +27,7 @@ namespace bf
 						//std::cout << "在范围内: " << mousePosition.x << ", " << mousePosition.y << "\n";
 						isDraged = true;
 						dragPoint = &points[i];
+						//插入了
 						isInserted = true;
 					}
 				}
@@ -34,6 +35,7 @@ namespace bf
 			else
 			{
 				dragPoint->Update(mousePosition);
+				//更新了控制点
 				isUpdate = true;
 			}
 			if (isPressed)
@@ -54,8 +56,8 @@ namespace bf
 			else
 			{
 				isDraged = false;
-				dragPoint = nullptr;
 				isInserted = false;
+				dragPoint = nullptr;
 			}
 			for (size_t i = 0; i < points.size(); i++)
 			{
@@ -70,6 +72,7 @@ namespace bf
 			}
 		}
 
+		//是否更新了控制点
 		bool isUpdate = false;
 
 		vector<Point> points;
@@ -97,6 +100,7 @@ namespace bf
 			{
 				points.push_back(Point(type, pos, topRenderR, checkR, normalColor, highlightColor));
 			}
+			//更新了控制点
 			isUpdate = true;
 		}
 

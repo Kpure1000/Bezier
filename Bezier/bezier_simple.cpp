@@ -4,10 +4,6 @@
 #include"total.h"
 
 unsigned int width = 1024, height = 768;
-#define CannotResize  (sf::Style::Titlebar |  sf::Style::Close)
-#define KeyPressing sf::Event::KeyPressed
-#define KeyReleasing sf::Event::KeyReleased
-#define KeyEvent(EV) (sf::Keyboard::isKeyPressed(EV))
 
 int bezier_simple_main()
 {

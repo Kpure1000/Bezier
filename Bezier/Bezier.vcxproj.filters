@@ -24,6 +24,9 @@
     <ClCompile Include="dragPoint.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LineRender.h">
@@ -42,6 +45,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
