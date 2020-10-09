@@ -4,10 +4,7 @@
 #include"total.h"
 
 unsigned int width = 1024, height = 768;
-#define CannotResize  (sf::Style::Titlebar |  sf::Style::Close)
-#define KeyPressing sf::Event::KeyPressed
-#define KeyReleasing sf::Event::KeyReleased
-#define KeyEvent(EV) (sf::Keyboard::isKeyPressed(EV))
+
 int bezier_simple_main()
 {
 	std::cout << "Bezier曲线演示(去递归)，通过鼠标点按窗口内空间添加控制点\n\n";
@@ -15,10 +12,6 @@ int bezier_simple_main()
 
 	sf::RenderWindow App(sf::VideoMode(width, height),
 		"Bezier", sf::Style::Close | sf::Style::Titlebar);
-
-	std::vector<sf::Vector2f> vertexs;
-
-	sf::Vector2f mousePos;
 
 	LineRender line(15000);
 
@@ -45,4 +38,5 @@ int bezier_simple_main()
 
 		App.display();
 	}
+	return 0;
 }

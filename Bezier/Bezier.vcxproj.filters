@@ -21,6 +21,12 @@
     <ClCompile Include="bezier_simple.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="dragPoint.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LineRender.h">
@@ -34,6 +40,15 @@
     </ClInclude>
     <ClInclude Include="PointManager.h">
 >>>>>>> 6e718d47762de0512c2feaf5a8b88a1ab58105f3
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierDrawer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

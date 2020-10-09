@@ -151,14 +151,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="bezier_simple.cpp" />
+    <ClCompile Include="dragPoint.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="DCube.h" />
+=======
+    <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="BezierDrawer.h" />
+>>>>>>> e2f9e27df7a6bec101e9f772bd10769f82839df5
     <ClInclude Include="LineRender.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointManager.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="total.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
