@@ -157,12 +157,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClInclude Include="DCube.h" />
-=======
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="BezierDrawer.h" />
->>>>>>> e2f9e27df7a6bec101e9f772bd10769f82839df5
     <ClInclude Include="LineRender.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointManager.h" />

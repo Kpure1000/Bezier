@@ -39,7 +39,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="PointManager.h">
->>>>>>> 6e718d47762de0512c2feaf5a8b88a1ab58105f3
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="BezierDrawer.h">
