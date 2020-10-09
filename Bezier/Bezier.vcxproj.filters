@@ -50,5 +50,8 @@
     <ClInclude Include="AssetManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="BsplineDrawer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
