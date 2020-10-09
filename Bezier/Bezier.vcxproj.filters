@@ -26,9 +26,6 @@
     <ClInclude Include="LineRender.h">
       <Filter>头文件</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="DCube.h">
-=======
     <ClInclude Include="total.h">
       <Filter>头文件</Filter>
     </ClInclude>
