@@ -10,7 +10,7 @@ namespace bf
 			:pManager(pointManager), lCount(lampCount)
 		{
 			vertexs = sf::VertexArray(sf::PrimitiveType::LineStrip, lCount);
-			degree = 4;
+			degree = 3;
 		}
 
 		void Init()
@@ -55,9 +55,9 @@ namespace bf
 						tmpPos = { 0.0f,0.0f };
 						for (int j = 0; j < pManager.points.size(); j++)
 						{
-							N_i_k = BaseFunc(j, degree - 1, tMin + (i * dt));
-							//N_i_k = BaseFunc_RE(j, degree - 1, tMin + (i * dt));
-							//outKnot("", j, degree - 1, N_i_k);
+							//N_i_k = BaseFunc(j, degree - 1, tMin + (i * dt));
+							N_i_k = BaseFunc_RE(j, degree - 1, tMin + (i * dt));
+							outKnot("µÝ¹é½á¹û: ", j, degree - 1, N_i_k);
 							tmpPos += N_i_k * pManager.points[j].pos;
 						}
 						vertexs[i].position = tmpPos;
@@ -132,9 +132,9 @@ namespace bf
 			float U2 = (div2 <= 1e-3) ? 1.0f : (knot[i + k + 1] - u) / div2;
 
 			float a = BaseFunc_RE(i, k - 1, u);
-			//outKnot("", i, k - 1, a);
+			outKnot("", i, k - 1, a);
 			float b = BaseFunc_RE(i + 1, k - 1, u);
-			//outKnot("", i + 1, k - 1, b);
+			outKnot("", i + 1, k - 1, b);
 			return U1 * a + U2 * b;
 		}
 
