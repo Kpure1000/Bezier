@@ -28,7 +28,7 @@ int dragPoint()
 	//±´Èû¶ûÇúÏß»æÖÆ
 	//bf::BezierDrawer bDrawer(pm, 10000);
 
-	bf::BsplineDrawer bSpliner(pm, 8000);
+	bf::BsplineDrawer bSpliner(pm, 10000);
 	bSpliner.Init();
 
 	sf::Text t_scrScale("scale: ", AssetManager::getInstance()->GetFont(FONT_MSYH), 24u);

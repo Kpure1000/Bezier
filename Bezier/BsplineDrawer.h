@@ -10,7 +10,7 @@ namespace bf
 			:pManager(pointManager), lCount(lampCount)
 		{
 			vertexs = sf::VertexArray(sf::PrimitiveType::LineStrip, lCount);
-			degree = 3;
+			degree = 4;
 		}
 
 		void Init()
@@ -31,7 +31,7 @@ namespace bf
 		//节点向量
 		vector<float> knot;
 
-		int degree = 3;//三阶
+		int degree;//三阶
 
 		Vector2f points[6];
 
@@ -56,7 +56,8 @@ namespace bf
 						for (int j = 0; j < pManager.points.size(); j++)
 						{
 							N_i_k = BaseFunc(j, degree - 1, tMin + (i * dt));
-							//std::cout << i << ", j: " << j << ", n" << N_i_k << std::endl;
+							//N_i_k = BaseFunc_RE(j, degree - 1, tMin + (i * dt));
+							//outKnot("", j, degree - 1, N_i_k);
 							tmpPos += N_i_k * pManager.points[j].pos;
 						}
 						vertexs[i].position = tmpPos;
@@ -74,16 +75,53 @@ namespace bf
 		/*
 		Bspline base function constructor
 		i: 控制点
-		k: 阶数
+		k: 次数
 		u: 节点
 		*/
 		float BaseFunc(int i, int k, float u)
 		{
+			int k_2 = pow(2, k);
+			int rk = 0;
+			for (int it = 0; it < k_2; it++)
+			{
+				if (it >= uArray.size())
+				{
+					uArray.push_back(0);
+				}
+			}
+			for (int it = 0; it < k_2; it += 2)
+			{
+				uArray[it] = (u >= knot[i + it / 2] && u < knot[i + 1 + it / 2]) ? 1.0f : 0.0f;
+				uArray[it + 1] = (u >= knot[i + 1 + it / 2] && u < knot[i + 2 + it / 2]) ? 1.0f : 0.0f;
+			}
+			rk++;
+			float div1, div2, U1, U2;
+			while (rk <= k)
+			{
+				for (int it = 0; it < k_2; it += 2)
+				{
+					div1 = knot[i + it / 2 + rk] - knot[i + it / 2];
+					div2 = knot[i + it / 2 + rk + 1] - knot[i + it / 2 + 1];
+
+					U1 = (abs(div1) < 1e-3f) ? 1.0f : (u - knot[i + it / 2]) / div1;
+					U2 = (abs(div2) < 1e-3f) ? 1.0f : (knot[i + it / 2 + rk + 1] - u) / div2;
+
+					uArray[it / 2] = U1 * uArray[it] + U2 * uArray[it + 1];
+
+				}
+				k_2 /= 2;
+				rk++;
+			}
+			return uArray[0];
+		}
+
+		float BaseFunc_RE(int i, int k, float u)
+		{
 			if (k == 0)
 			{
 				/*std::cout << "u(" << u << ") >= [" << i << "](" << knot[i]
-					<< ") && u(" << u << ") < [" << i + 1 << "](" << knot[i + 1] << ")\n";
-				std::cout << (u > knot[i] && u <= knot[i + 1]) << std::endl;*/
+					<< ") && u(" << u << ") < [" << i + 1 << "](" << knot[i + 1] << ")\n";*/
+					/*std::cout << (u > knot[i] && u <= knot[i + 1]) << std::endl;*/
 				return (u >= knot[i] && u < knot[i + 1]) ? 1.0f : 0.0f;
 			}
 
@@ -93,7 +131,11 @@ namespace bf
 			float U1 = (div1 <= 1e-3) ? 1.0f : (u - knot[i]) / div1;
 			float U2 = (div2 <= 1e-3) ? 1.0f : (knot[i + k + 1] - u) / div2;
 
-			return U1 * BaseFunc(i, k - 1, u) + U2 * BaseFunc(i + 1, k - 1, u);
+			float a = BaseFunc_RE(i, k - 1, u);
+			//outKnot("", i, k - 1, a);
+			float b = BaseFunc_RE(i + 1, k - 1, u);
+			//outKnot("", i + 1, k - 1, b);
+			return U1 * a + U2 * b;
 		}
 
 		void SetKnot()
@@ -103,8 +145,8 @@ namespace bf
 			{
 				if (i < knot.size())
 				{
-					//knot[i] = (float)i / (knotCount - 1);
-					if (i < degree)
+					knot[i] = (float)i / (knotCount - 1);
+					/*if (i < degree)
 					{
 						knot[i] = i;
 					}
@@ -115,12 +157,12 @@ namespace bf
 					else
 					{
 						knot[i] = knot[i - 1];
-					}
+					}*/
 				}
 				else
 				{
-					//knot.push_back((float)i / (knotCount - 1));
-					if (i < degree)
+					knot.push_back((float)i / (knotCount - 1));
+					/*if (i < degree)
 					{
 						knot.push_back((float)i);
 					}
@@ -131,7 +173,7 @@ namespace bf
 					else
 					{
 						knot.push_back(knot[i - 1]);
-					}
+					}*/
 				}
 			}
 		}
@@ -143,9 +185,17 @@ namespace bf
 			target.draw(vertexs, states);
 		}
 
+		void outKnot(string const& attatch, int const& i, int const& k, float const& val)
+		{
+			std::cout << attatch << "[" << i << ", " << k << "]: " << val << std::endl;
+		}
+
 		sf::VertexArray vertexs;
-		PointManager &pManager;
+		PointManager& pManager;
 		int lCount;
+
+		vector<float> uArray;
+
 	};
 
 }
