@@ -26,7 +26,7 @@ int dragPoint()
 
 	bf::PointManager pm;
 
-	bf::BezierDrawer bDrawer(pm, 3000);
+	bf::BezierDrawer bDrawer(pm, 15000);
 
 	sf::Text t_scrScale("scale: ", AssetManager::getInstance()->GetFont(FONT_MSYH), 30u);
 

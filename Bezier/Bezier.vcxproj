@@ -157,9 +157,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DCube.h" />
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="BezierDrawer.h" />
+    <ClInclude Include="BsplineDrawer.h" />
     <ClInclude Include="LineRender.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PointManager.h" />
