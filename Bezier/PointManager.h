@@ -9,18 +9,21 @@ namespace bf
 	class PointManager : public sf::Drawable
 	{
 	public:
+
 		/// <summary>
 		/// 更新
 		/// </summary>
 		/// <param name="mousePosition"></param>
-		void Update(Vector2f const& mousePosition, bool& isPressed)
+		void Update(sf::RenderWindow& App, bool const& isPressed)
 		{
+			m_mousePosition = App.mapPixelToCoords(sf::Mouse::getPosition(App));
+			wsize = App.getSize();
 			if (!isDraged)
 			{
 				for (int i = 0; i < points.size(); i++)
 				{
 					//是否在某点的检测范围内
-					isInRange = points[i].isContained(mousePosition);
+					isInRange = points[i].isContained(m_mousePosition);
 					//设置高光
 					points[i].setHighlight(isInRange);
 					if (isInRange && isPressed && !isDraged) {
@@ -34,22 +37,23 @@ namespace bf
 			}
 			else
 			{
-				dragPoint->Update(mousePosition);
+				dragPoint->Update(m_mousePosition);
 				//更新了控制点
 				isUpdate = true;
 			}
 			if (isPressed)
 			{
-				if (!isInserted)
+				if (!isForbidenInsert && !isInserted && (m_mousePosition.x > 0 && m_mousePosition.x < wsize.x * 0.8
+						&& m_mousePosition.y > 0 && m_mousePosition.y < wsize.y))
 				{
 					isInserted = true;
 					if (points.size() >= 2)
 					{
-						InsertPoint(mousePosition, PointType::Normal);
+						InsertPoint(m_mousePosition, PointType::Normal);
 					}
 					else
 					{
-						InsertPoint(mousePosition, PointType::Top);
+						InsertPoint(m_mousePosition, PointType::Top);
 					}
 				}
 			}
@@ -72,21 +76,9 @@ namespace bf
 			}
 		}
 
-		//是否更新了控制点
-		bool isUpdate = false;
-
-		vector<Point> points;
-		vector<Point> tmpPoints;
-
-		const float normalRenderR = 3.5f;
-		const float topRenderR = 4.5f;
-		const float checkR = 6.0f;
-		const Color normalColor = Color(0x007777ff);
-		const Color highlightColor = Color(0xff0000ff);
-
-	private:
 		void InsertPoint(Vector2f const& pos, PointType type)
 		{
+			if (isForbidenInsert)return;
 			//std::cout << "添加:(" << pos.x << ", " << pos.y << ")\n";
 			Point last;
 			if (type == PointType::Normal)
@@ -104,6 +96,32 @@ namespace bf
 			isUpdate = true;
 		}
 
+		void InserPointNormal(Vector2f const& pos)
+		{
+			points.push_back(Point(PointType::Normal, pos, normalRenderR, checkR, normalColor, highlightColor));
+			isUpdate = true;
+		}
+
+		void ForbidenInsert(bool isF)
+		{
+			isForbidenInsert = isF;
+		}
+
+		//是否更新了控制点
+		bool isUpdate = false;
+
+		vector<Point> points;
+		vector<Point> tmpPoints;
+
+		const float normalRenderR = 3.5f;
+		const float topRenderR = 4.5f;
+		const float checkR = 6.0f;
+		const Color normalColor = Color(0x007777ff);
+		const Color highlightColor = Color(0xff0000ff);
+
+	private:
+		
+
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states)const
 		{
 			for (size_t i = 0; i < points.size(); i++)
@@ -112,12 +130,18 @@ namespace bf
 			}
 		}
 
+		sf::Vector2f m_mousePosition;
+
+		sf::Vector2u wsize;
+
 		/* 鼠标行为相关 */
 		bool isInRange = false;
 
 		bool isInserted = false;
 
 		bool isDraged = false;
+
+		bool isForbidenInsert = false;
 
 		Point* dragPoint = nullptr;
 	};

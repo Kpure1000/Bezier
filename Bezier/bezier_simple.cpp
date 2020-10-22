@@ -3,10 +3,11 @@
 #include"LineRender.h"
 #include"total.h"
 
-unsigned int width = 1024, height = 768;
 
 int bezier_simple_main()
 {
+	unsigned int width = 1024, height = 768;
+
 	std::cout << "Bezier曲线演示(去递归)，通过鼠标点按窗口内空间添加控制点\n\n";
 	system("pause");
 
