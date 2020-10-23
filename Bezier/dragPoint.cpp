@@ -25,15 +25,11 @@ int dragPoint()
 	//控制点管理
 	bf::PointManager pm;
 
-<<<<<<< HEAD
-	bf::BezierDrawer bDrawer(pm, 15000);
-=======
 	//贝塞尔曲线绘制
 	//bf::BezierDrawer bDrawer(pm, 10000);
 
 	bf::BsplineDrawer bSpliner(pm, 20);
-	bSpliner.Init();
->>>>>>> c20d7eaa48c7b46804a19ceaa110d5beb7b49045
+	//bSpliner.Init();
 
 	sf::Text t_scrScale("scale: ", AssetManager::getInstance()->GetFont(FONT_MSYH), 24u);
 

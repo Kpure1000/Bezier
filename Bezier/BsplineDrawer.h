@@ -1,40 +1,9 @@
 #pragma once
 #include"PointManager.h"
+using std::cout;
+using std::endl;
 namespace bf
 {
-<<<<<<< HEAD
-	class BsplineDrawer
-	{
-	public:
-		vector<float>NodeVector;
-
-		float BaseFunc(int i, int k, float u)
-		{
-			if (k == 0) {
-				if ((u >= NodeVector[i + 1]) && (u < NodeVector[i + 2])) {
-					return 1.0f;
-				}
-				else {
-					return 0.0f;
-				}
-			}
-			else {
-				length1 = NodeVector[i + k + 1] - NodeVector[i + 1];
-				length2 = NodeVector[i + k + 2] - NodeVector[i + 2];
-				abs(length1) <= 1e-7f ? length1 = 1.f : 0.f;
-				abs(length2) <= 1e-7f ? length2 = 1.f : 0.f;
-
-				return (u - NodeVector[i + 1] / length1 * BaseFunc(i, k - 1, u))
-					+ (NodeVector[i + k + 2] - u) / length2 * BaseFunc(i + 1, k - 1, u);
-			}
-
-		}
-
-
-	private:
-		float length1;
-		float length2;
-=======
 	class BsplineDrawer : public sf::Drawable
 	{
 	public:
@@ -44,21 +13,16 @@ namespace bf
 		{
 			vertexs = sf::VertexArray(sf::PrimitiveType::LineStrip, lCount);
 			degree = 3;
-		}
 
-		void Init()
-		{
-			/*points[0] = { 100,100 };
-			points[1] = { 150,200 };
-			points[2] = { 200,100 };
-			points[3] = { 250,200 };
-			points[4] = { 300,100 };
-			points[5] = { 350,200 };*/
-			//pManager.ForbidenInsert(true);
-			/*for (size_t i = 0; i < 6; i++)
+			tLength = pow(2, degree) - 1;
+			tArray = (int*)malloc(sizeof(int) * tLength);
+			tArray[0] = 0;
+			for (size_t i = 1; i < tLength; i++)
 			{
-				pManager.InserPointNormal(points[i]);
-			}*/
+				tArray[i] = i % 2 != 0 ? tArray[(i - 1) / 2] : tArray[(i - 2) / 2] + 1;
+				cout << tArray[i] << " ";
+			}
+			cout << endl;
 		}
 
 		//节点向量
@@ -72,7 +36,7 @@ namespace bf
 		{
 			if (pManager.isUpdate)
 			{
-				SetKnot();
+				UpdateKnot();
 				Vector2f tmpPos;
 
 				float tMin = knot[degree - 1];
@@ -88,8 +52,8 @@ namespace bf
 						tmpPos = { 0.0f,0.0f };
 						for (int j = 0; j < pManager.points.size(); j++)
 						{
-							//N_i_k = BaseFunc(j, degree - 1, tMin + (i * dt));
-							N_i_k = BaseFunc_RE(j, degree - 1, tMin + (i * dt));
+							N_i_k = BaseFunc(j, degree - 1, tMin + (i * dt));
+							//N_i_k = BaseFunc_RE(j, degree - 1, tMin + (i * dt));
 							outKnot("递归结果: ", j, degree - 1, N_i_k);
 							tmpPos += N_i_k * pManager.points[j].pos;
 						}
@@ -122,10 +86,10 @@ namespace bf
 					uArray.push_back(0);
 				}
 			}
-			for (int it = 0; it < k_2; it += 2)
+			for (int it = 0; it < k_2; it += 1)
 			{
-				uArray[it] = (u >= knot[i + it / 2] && u < knot[i + 1 + it / 2]) ? 1.0f : 0.0f;
-				uArray[it + 1] = (u >= knot[i + 1 + it / 2] && u < knot[i + 2 + it / 2]) ? 1.0f : 0.0f;
+				uArray[it] = (u >= knot[i + tArray[index(k, it)]]
+					&& u < knot[i + tArray[index(k, it)] + 1]) ? 1.0f : 0.0f;
 			}
 			rk++;
 			float div1, div2, U1, U2;
@@ -133,11 +97,11 @@ namespace bf
 			{
 				for (int it = 0; it < k_2; it += 2)
 				{
-					div1 = knot[i + it / 2 + rk] - knot[i + it / 2];
-					div2 = knot[i + it / 2 + rk + 1] - knot[i + it / 2 + 1];
+					div1 = knot[i + tArray[index(k - rk, it)] + rk] - knot[i + tArray[index(k - rk, it)]];
+					div2 = knot[i + tArray[index(k - rk, it)] + rk + 1] - knot[i + tArray[index(k - rk, it)] + 1];
 
-					U1 = (abs(div1) < 1e-3f) ? 1.0f : (u - knot[i + it / 2]) / div1;
-					U2 = (abs(div2) < 1e-3f) ? 1.0f : (knot[i + it / 2 + rk + 1] - u) / div2;
+					U1 = (abs(div1) < 1e-3f) ? 1.0f : (u - knot[i + tArray[index(k - rk, it)]]) / div1;
+					U2 = (abs(div2) < 1e-3f) ? 1.0f : (knot[i + tArray[index(k - rk, it)] + rk + 1] - u) / div2;
 
 					uArray[it / 2] = U1 * uArray[it] + U2 * uArray[it + 1];
 
@@ -146,6 +110,11 @@ namespace bf
 				rk++;
 			}
 			return uArray[0];
+		}
+
+		int index(int k, int it)
+		{
+			return (int)pow(2, k) - 1 + it;
 		}
 
 		float BaseFunc_RE(int i, int k, float u)
@@ -171,7 +140,7 @@ namespace bf
 			return U1 * a + U2 * b;
 		}
 
-		void SetKnot()
+		void UpdateKnot()
 		{
 			int knotCount = pManager.points.size() + degree;
 			for (int i = 0; i < knotCount; i++)
@@ -229,7 +198,10 @@ namespace bf
 
 		vector<float> uArray;
 
->>>>>>> c20d7eaa48c7b46804a19ceaa110d5beb7b49045
+		int* tArray;
+
+		int tLength;
+
 	};
 
 }
