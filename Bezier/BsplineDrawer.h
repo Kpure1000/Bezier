@@ -2,6 +2,9 @@
 #include"PointManager.h"
 using std::cout;
 using std::endl;
+
+#define OUT_KNOT 0
+
 namespace bf
 {
 	class BsplineDrawer : public sf::Drawable
@@ -12,7 +15,7 @@ namespace bf
 			:pManager(pointManager), lCount(lampCount)
 		{
 			vertexs = sf::VertexArray(sf::PrimitiveType::LineStrip, lCount);
-			degree = 3;
+			degree = 5;
 
 			tLength = pow(2, degree) - 1;
 			tArray = (int*)malloc(sizeof(int) * tLength);
@@ -54,7 +57,7 @@ namespace bf
 						{
 							N_i_k = BaseFunc(j, degree - 1, tMin + (i * dt));
 							//N_i_k = BaseFunc_RE(j, degree - 1, tMin + (i * dt));
-							outKnot("µÝ¹é½á¹û: ", j, degree - 1, N_i_k);
+							outKnot("RE: ", j, degree - 1, N_i_k);
 							tmpPos += N_i_k * pManager.points[j].pos;
 						}
 						vertexs[i].position = tmpPos;
@@ -97,14 +100,15 @@ namespace bf
 			{
 				for (int it = 0; it < k_2; it += 2)
 				{
-					div1 = knot[i + tArray[index(k - rk, it)] + rk] - knot[i + tArray[index(k - rk, it)]];
-					div2 = knot[i + tArray[index(k - rk, it)] + rk + 1] - knot[i + tArray[index(k - rk, it)] + 1];
+					div1 = knot[i + tArray[index(k - rk, it/2)] + rk] - knot[i + tArray[index(k - rk, it/2)]];
+					div2 = knot[i + tArray[index(k - rk, it/2)] + rk + 1] - knot[i + tArray[index(k - rk, it/2)] + 1];
 
-					U1 = (abs(div1) < 1e-3f) ? 1.0f : (u - knot[i + tArray[index(k - rk, it)]]) / div1;
-					U2 = (abs(div2) < 1e-3f) ? 1.0f : (knot[i + tArray[index(k - rk, it)] + rk + 1] - u) / div2;
+					U1 = (abs(div1) < 1e-3f) ? 1.0f : (u - knot[i + tArray[index(k - rk, it/2)]]) / div1;
+					U2 = (abs(div2) < 1e-3f) ? 1.0f : (knot[i + tArray[index(k - rk, it/2)] + rk + 1] - u) / div2;
 
 					uArray[it / 2] = U1 * uArray[it] + U2 * uArray[it + 1];
 
+					outKnot("", i + tArray[index(k - rk, it/2)], k - rk, uArray[it / 2]);
 				}
 				k_2 /= 2;
 				rk++;
@@ -189,7 +193,9 @@ namespace bf
 
 		void outKnot(string const& attatch, int const& i, int const& k, float const& val)
 		{
+#if OUT_KNOT
 			std::cout << attatch << "[" << i << ", " << k << "]: " << val << std::endl;
+#endif // OUT_KNOT
 		}
 
 		sf::VertexArray vertexs;
