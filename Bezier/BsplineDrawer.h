@@ -57,7 +57,7 @@ namespace bf
 						{
 							N_i_k = BaseFunc(j, degree - 1, tMin + (i * dt));
 							//N_i_k = BaseFunc_RE(j, degree - 1, tMin + (i * dt));
-							outKnot("RE: ", j, degree - 1, N_i_k);
+							//outKnot("RE: ", j, degree - 1, N_i_k);
 							tmpPos += N_i_k * pManager.points[j].pos;
 						}
 						vertexs[i].position = tmpPos;
@@ -108,7 +108,7 @@ namespace bf
 
 					uArray[it / 2] = U1 * uArray[it] + U2 * uArray[it + 1];
 
-					outKnot("", i + tArray[index(k - rk, it/2)], k - rk, uArray[it / 2]);
+					//outKnot("", i + tArray[index(k - rk, it/2)], k - rk, uArray[it / 2]);
 				}
 				k_2 /= 2;
 				rk++;

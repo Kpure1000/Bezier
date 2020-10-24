@@ -12,7 +12,7 @@ int dragPoint()
 	unsigned int width = 1024, height = 768;
 
 	sf::RenderWindow App(sf::VideoMode(width, height),
-		"Bezier", sf::Style::Close | sf::Style::Titlebar);
+		"B-Spline Sketcher", sf::Style::Close | sf::Style::Titlebar);
 	
 	sf::Vector2u wsize = App.getSize();
 	
@@ -28,7 +28,7 @@ int dragPoint()
 	//贝塞尔曲线绘制
 	//bf::BezierDrawer bDrawer(pm, 10000);
 
-	bf::BsplineDrawer bSpliner(pm, 10000);
+	bf::BsplineDrawer bSpliner(pm, 100);
 	//bSpliner.Init();
 
 	sf::Text t_scrScale("scale: ", AssetManager::getInstance()->GetFont(FONT_MSYH), 24u);
@@ -91,7 +91,7 @@ int dragPoint()
 		App.setView(Gui);
 
 		ViewScale = ViewSize.y / wsize.y;
-		sprintf_s(str, "Bezier Sketch!\r\nView Scale: %.2f", ViewScale);
+		sprintf_s(str, "B-Spline Sketch!\r\nView Scale: %.2f", ViewScale);
 		t_scrScale.setString(str);
 
 		//绘制缩放文本
