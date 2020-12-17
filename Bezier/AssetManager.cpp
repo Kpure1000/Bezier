@@ -12,7 +12,7 @@ AssetManager* AssetManager::getInstance()
 {
 	if (sInstance == nullptr)
 	{
-		sInstance = &AssetManager();
+		sInstance = new AssetManager();
 	}
 	return sInstance;
 }
